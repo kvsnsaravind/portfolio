@@ -1,0 +1,6 @@
+fastapi
+uvicorn
+requests
+numpy
+cohere
+httpx

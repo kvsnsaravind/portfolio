@@ -66,11 +66,11 @@
         <h2>About</h2>
         <hr class="about-underline" />
         <p>
-          Myself, Aravind Kollipara, a full-stack software
-          engineer with 4+ years of experience building scalable, reliable backend-heavy
-          web applications with engaging, user-centric frontends. I thrive at
-          the intersection of engineering and creativity—designing systems that
-          are as elegant as they are efficient.
+          Myself, Aravind Kollipara, a full-stack software engineer with 4+
+          years of experience building scalable, reliable backend-heavy web
+          applications with engaging, user-centric frontends. I thrive at the
+          intersection of engineering and creativity—designing systems that are
+          as elegant as they are efficient.
         </p>
         <h3 class="about-title">
           Full-Stack Web Developer & AI/ML Enthusiast.
@@ -407,6 +407,103 @@
         setTimeout(typeRole, isDeleting ? 40 : 80);
       }
       typeRole();
+    </script>
+
+    <!-- Chatbot UI with open/close functionality -->
+    <div id="chatbot-box" class="chatbot-box">
+      <div class="chatbot-resize-handle"></div>
+      <button id="close-chatbot" class="chatbot-close">&times;</button>
+      <div id="chatbot-messages" class="chatbot-messages"></div>
+      <div class="chatbot-input-row">
+        <input
+          id="chatbot-input"
+          type="text"
+          placeholder="Ask me anything about Aravind..."
+          class="chatbot-input"
+        />
+        <button onclick="sendChatbot()" class="chatbot-send">Send</button>
+      </div>
+    </div>
+    <button id="open-chatbot" class="chatbot-open" style="display: none">
+      💬
+    </button>
+    <script>
+      async function sendChatbot() {
+        const input = document.getElementById("chatbot-input");
+        const msgBox = document.getElementById("chatbot-messages");
+        const question = input.value.trim();
+        if (!question) return;
+        msgBox.innerHTML += `<div><b>You:</b> ${question}</div>`;
+        input.value = "";
+        try {
+          const res = await fetch("http://127.0.0.1:8000/api/chatbot", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ question }),
+          });
+          if (!res.ok) throw new Error("Network response was not ok");
+          const data = await res.json();
+          msgBox.innerHTML += `<div><b>Bot:</b> ${data.answer}</div>`;
+        } catch (err) {
+          msgBox.innerHTML += `<div style="color:red;"><b>Bot:</b> Error: ${err.message}</div>`;
+        }
+        msgBox.scrollTop = msgBox.scrollHeight;
+      }
+
+      // Chatbot open/close logic
+      const chatbotBox = document.getElementById("chatbot-box");
+      const closeBtn = document.getElementById("close-chatbot");
+      const openBtn = document.getElementById("open-chatbot");
+
+      closeBtn.onclick = function () {
+        chatbotBox.style.display = "none";
+        openBtn.style.display = "block";
+      };
+
+      openBtn.onclick = function () {
+        chatbotBox.style.display = "block";
+        openBtn.style.display = "none";
+      };
+    </script>
+    <script>
+      const chatbotBoxResize = document.getElementById("chatbot-box");
+      const resizeHandle = document.querySelector(".chatbot-resize-handle");
+
+      let isResizing = false;
+      let startX, startY, startWidth, startHeight, startTop, startLeft;
+
+      resizeHandle.addEventListener("mousedown", function (e) {
+        e.preventDefault();
+        isResizing = true;
+        startX = e.clientX;
+        startY = e.clientY;
+        startWidth = chatbotBox.offsetWidth;
+        startHeight = chatbotBox.offsetHeight;
+        startTop = chatbotBox.offsetTop;
+        startLeft = chatbotBox.offsetLeft;
+        document.body.style.userSelect = "none";
+      });
+
+      document.addEventListener("mousemove", function (e) {
+        if (!isResizing) return;
+        const dx = startX - e.clientX;
+        const dy = startY - e.clientY;
+        let newWidth = Math.max(250, startWidth + dx);
+        let newHeight = Math.max(220, startHeight + dy);
+        let newTop = startTop - dy;
+        let newLeft = startLeft - dx;
+        chatbotBox.style.width = newWidth + "px";
+        chatbotBox.style.height = newHeight + "px";
+        chatbotBox.style.top = newTop + "px";
+        chatbotBox.style.left = newLeft + "px";
+        chatbotBox.style.bottom = "auto";
+        chatbotBox.style.right = "auto";
+      });
+
+      document.addEventListener("mouseup", function () {
+        isResizing = false;
+        document.body.style.userSelect = "";
+      });
     </script>
   </body>
 </html>

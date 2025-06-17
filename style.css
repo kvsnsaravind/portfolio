@@ -9,6 +9,14 @@
   --shadow: 0 2px 16px rgba(0, 0, 0, 0.08);
   --transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
+/* Box sizing for all elements */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 html,
 body {
   margin: 0;
@@ -19,11 +27,15 @@ body {
   min-height: 100vh;
   scroll-behavior: smooth;
 }
+
 body {
   display: flex;
+  min-height: 100vh;
 }
+
 .sidebar {
   width: 250px;
+  min-width: 220px;
   background: var(--sidebar-bg);
   min-height: 100vh;
   position: fixed;
@@ -37,6 +49,7 @@ body {
   z-index: 100;
   transition: background var(--transition);
 }
+
 .sidebar h1 {
   font-size: 1.3rem;
   color: var(--primary);
@@ -46,6 +59,7 @@ body {
   font-weight: 700;
   letter-spacing: 1px;
 }
+
 .sidebar p {
   font-size: 1rem;
   color: var(--muted);
@@ -54,15 +68,18 @@ body {
   padding: 0 1rem;
   font-weight: 400;
 }
+
 .sidebar nav ul {
   list-style: none;
   padding: 0;
   margin: 0;
   width: 100%;
 }
+
 .sidebar nav li {
   width: 100%;
 }
+
 .sidebar nav a {
   display: block;
   width: 100%;
@@ -74,19 +91,22 @@ body {
   border-left: 4px solid transparent;
   letter-spacing: 0.5px;
 }
+
 .sidebar nav a:hover,
 .sidebar nav a.active {
   background: var(--bg);
   color: var(--primary);
   border-left: 4px solid var(--primary);
 }
+
 .main-content {
   margin-left: 250px;
-  width: 100%;
-  max-width: 900px;
-  padding: 2rem 2rem 2rem 2rem;
-  transition: margin var(--transition);
+  width: calc(100% - 250px);
+  min-height: 100vh;
+  padding: 2rem;
+  box-sizing: border-box;
 }
+
 section {
   margin-bottom: 3rem;
   background: var(--sidebar-bg);
@@ -95,6 +115,7 @@ section {
   box-shadow: var(--shadow);
   transition: background var(--transition), box-shadow var(--transition);
 }
+
 h2 {
   color: var(--primary);
   margin-bottom: 1rem;
@@ -102,6 +123,7 @@ h2 {
   font-weight: 700;
   letter-spacing: 1px;
 }
+
 /* Career Timeline */
 .career-list {
   display: flex;
@@ -137,6 +159,7 @@ h2 {
 .career-card span {
   font-size: 0.95rem;
 }
+
 /* Projects */
 .projects-list {
   display: flex;
@@ -171,6 +194,7 @@ h2 {
   color: #fff;
   text-decoration: underline;
 }
+
 /* Skills */
 .skills-list {
   display: flex;
@@ -190,11 +214,15 @@ h2 {
   border: 1px solid var(--border);
   margin-bottom: 0.5rem;
   transition: background var(--transition), color var(--transition);
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 .skills-list li:hover {
   background: var(--primary);
   color: #181818;
 }
+
 /* Services */
 .services-list {
   display: flex;
@@ -222,6 +250,7 @@ h2 {
   color: #181818;
   border-color: var(--primary);
 }
+
 /* Contact */
 .contact-links a {
   margin-right: 1.5rem;
@@ -236,7 +265,7 @@ h2 {
   text-decoration: underline;
 }
 
-/* Sidebar Social Icons - Always show brand color */
+/* Sidebar Social Icons - Always show white */
 .sidebar-social {
   display: flex;
   gap: 18px;
@@ -254,19 +283,24 @@ h2 {
   color: #fff !important;
 }
 .sidebar-github {
-  color: #fff !important; /* White for GitHub icon */
+  color: #fff !important;
 }
 
 /* Responsive */
-@media (max-width: 900px) {
+@media (max-width: 1100px) {
   .main-content {
+    max-width: 100vw;
     padding: 1rem;
   }
 }
 @media (max-width: 700px) {
+  body {
+    flex-direction: column;
+  }
   .sidebar {
     position: static;
     width: 100%;
+    min-width: unset;
     flex-direction: row;
     padding: 0.5rem 0;
     min-height: unset;
@@ -294,7 +328,10 @@ h2 {
   }
   .main-content {
     margin-left: 0;
+    width: 100%;
+    min-width: 0;
     padding: 1rem;
+    box-sizing: border-box;
   }
   section {
     padding: 1rem;
@@ -305,6 +342,8 @@ h2 {
     flex-direction: column;
   }
 }
+
+/* Miscellaneous */
 .cursor {
   display: inline-block;
   color: var(--primary);
@@ -382,10 +421,127 @@ h2 {
   color: var(--primary);
   vertical-align: middle;
 }
-.skills-list li {
+/* --- Existing styles above this line --- */
+
+/* Chatbot container */
+.chatbot-box {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 320px;
+  background: #232526;
+  border-radius: 12px;
+  box-shadow: 0 2px 16px #0008;
+  z-index: 9999;
+  display: block;
+  padding: 16px 16px 12px 16px;
+}
+
+/* Close button always on top */
+.chatbot-close {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 1.3em;
+  cursor: pointer;
+  z-index: 10001;
+}
+
+/* Messages area with top margin for close button */
+.chatbot-messages {
+  height: 140px;
+  overflow-y: auto;
+  font-size: 1rem;
+  color: #fff;
+  margin-bottom: 8px;
+  margin-top: 32px; /* Pushes messages below close button */
+  padding-right: 8px;
+}
+
+/* Input row styling */
+.chatbot-input-row {
   display: flex;
-  align-items: center;
-  gap: 6px;
-  margin-bottom: 0.7rem;
-  font-size: 1.08rem;
+  gap: 8px;
+}
+
+.chatbot-input {
+  flex: 1;
+  padding: 8px;
+  border-radius: 6px;
+  border: none;
+}
+
+.chatbot-send {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  background: #00e6d0;
+  color: #181818;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Floating open button */
+.chatbot-open {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #00e6d0;
+  color: #181818;
+  border: none;
+  border-radius: 50%;
+  width: 56px;
+  height: 56px;
+  font-size: 2em;
+  cursor: pointer;
+  z-index: 10000;
+}
+
+/* Responsive for chatbot */
+@media (max-width: 500px) {
+  .chatbot-box {
+    width: 95vw;
+    right: 2vw;
+    left: 2vw;
+    min-width: unset;
+    max-width: 98vw;
+    padding: 8px 8px 8px 8px;
+  }
+  .chatbot-messages {
+    height: 100px;
+    font-size: 0.95rem;
+  }
+}
+
+.chatbot-box {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 320px;
+  min-width: 250px;
+  min-height: 220px;
+  max-width: 98vw;
+  max-height: 90vh;
+  background: #232526;
+  border-radius: 12px;
+  box-shadow: 0 2px 16px #0008;
+  z-index: 9999;
+  display: block;
+  padding: 16px 16px 12px 16px;  
+  resize: both; /* Allow resizing */
+  overflow: hidden; /* Hide overflow to prevent scrollbars */
+}
+.chatbot-resize-handle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 18px;
+  height: 18px;
+  cursor: nwse-resize;
+  z-index: 10002;
+  background: linear-gradient(135deg, #00e6d0 60%, transparent 60%);
+  border-top-left-radius: 12px;
 }
