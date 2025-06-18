@@ -28,9 +28,13 @@ docs = [
     "He is passionate about AI/ML and Generative AI.",
     "Aravind Kollipara's LinkedIn profile is https://linkedin.com/in/aravind-kollipara.",
     "Aravind Kollipara's GitHub profile is https://github.com/kvsnsaravind.",
-    "He has a Master's degree in Computer Science from the State University of New York at Buffalo.",
+    "He has a highest degree of Masters in Computer Science from the State University of New York at Buffalo."
+    "and also a Bachelors in Information Technology from SRM University, Chennai, India.",
     "Aravind Kollipara is Originally from India and currently lives in the USA, Seattle.",
     "If the user uses 'he' or 'his', they refer to Aravind Kollipara.",
+    "Aravind Kollipara has worked on various projects including web applications, APIs, and cloud solutions.",
+    "He worked in Amazon Web Services for 2 years as a Software Development Engineer. Before that worked in Accenture as a Associate Software Engineer"
+    " and BNP Paribas owrked as a Database Developer.",
     # Add more facts about you here
 ]
 

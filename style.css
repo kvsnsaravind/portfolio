@@ -545,3 +545,23 @@ h2 {
   background: linear-gradient(135deg, #00e6d0 60%, transparent 60%);
   border-top-left-radius: 12px;
 }
+.certifications-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.certifications-list li {
+  margin-bottom: 1em;
+  background: #232526;
+  padding: 1em;
+  border-radius: 8px;
+  color: #fff;
+}
+.certifications-list a {
+  color: #00e6ff; /* sky blue */
+  text-decoration: underline;
+  transition: color 0.2s;
+}
+.certifications-list a:hover {
+  color: #00b3cc; /* darker sky blue on hover */
+}
