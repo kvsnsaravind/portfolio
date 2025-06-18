@@ -4,9 +4,10 @@ from fastapi.responses import JSONResponse
 import cohere
 import numpy as np
 import httpx
+import os
 
-# Set your Cohere API key here
-COHERE_API_KEY = "XRDdxwsPpUmbaZPICBudGao2VpbjQYeVAuEQfkBz"
+# Set the environment variable for Cohere API key
+COHERE_API_KEY = os.getenv("COHERE_API_KEY")
 co = cohere.Client(COHERE_API_KEY)
 
 app = FastAPI()
