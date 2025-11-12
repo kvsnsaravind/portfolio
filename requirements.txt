@@ -4,3 +4,6 @@ requests
 numpy
 cohere
 httpx
+chromadb
+beautifulsoup4
+pypdf
